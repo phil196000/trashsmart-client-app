@@ -1,14 +1,14 @@
 import 'dart:async';
 
 // import 'package:academy/Screens/SignUp.dart';
-import 'package:adobe_xd/adobe_xd.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:trashsmart/Components/DarkGreen.dart';
+
+import 'package:trashsmart/Components/Stepper.dart';
 import 'package:trashsmart/Constants/colors.dart';
-import 'package:trashsmart/DartAssets/LoginImage.dart';
+
 import 'package:trashsmart/DartAssets/SignUpImage.dart';
-import 'package:trashsmart/Screens/SignIn.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -186,9 +186,71 @@ class _SignUpState extends State<SignUp> {
                     alignment: Alignment.topCenter,
                     children: [
                       Positioned(
-                        child: SvgPicture.string(
-                          '<svg viewBox="-40.7 -0.1 415.7 46.1" ><path transform="matrix(-1.0, 0.0, 0.0, -1.0, 375.0, 50.91)" d="M 148.0453491210938 4.9149169921875 L 415.740478515625 51 L 0 51 L 148.0453491210938 4.9149169921875 Z" fill="#000000" fill-opacity="0.15" stroke="none" stroke-width="1" stroke-miterlimit="4" stroke-linecap="butt" /></svg>',
-                          allowDrawingOutsideViewBox: true,
+                        child: Stack(
+                          overflow: Overflow.visible,
+                          // alignment: Alignment.center,
+                          children: [
+                            RotatedBox(
+                              quarterTurns: 6,
+                              child: SvgPicture.string(
+                                '<svg viewBox="-40.7 -0.1 415.7 46.1" ><path transform="matrix(-1.0, 0.0, 0.0, -1.0, 375.0, 50.91)" d="M 148.0453491210938 4.9149169921875 L 415.740478515625 51 L 0 51 L 148.0453491210938 4.9149169921875 Z" fill="#000000" fill-opacity="0.15" stroke="none" stroke-width="1" stroke-miterlimit="4" stroke-linecap="butt" /></svg>',
+                                allowDrawingOutsideViewBox: true,
+                              ),
+                            ),
+                            Positioned(
+                                bottom: 10,
+                                left: 15,
+                                child: Container(
+                                  width: 35,
+                                  height: 35,
+                                  alignment: Alignment.centerLeft,
+                                  decoration: BoxDecoration(
+                                      color: primary,
+                                      borderRadius: BorderRadius.circular(30)),
+                                  child: IconButton(
+                                      color: Colors.white,
+                                      iconSize: 20,
+                                      icon: Icon(Icons.chevron_left),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      }),
+                                ))
+                            // Positioned(
+                            //     bottom: 10,
+                            //     left: MediaQuery.of(context).size.width * 0.3,
+                            //     child: Container(
+                            //       width: 70,
+                            //       child: Row(
+                            //         mainAxisAlignment:
+                            //             MainAxisAlignment.spaceBetween,
+                            //         children: [
+                            //           AnimatedOpacity(
+                            //             opacity: 1,
+                            //             duration: Duration(milliseconds: 500),
+                            //             child: SizedBox(
+                            //               width: 15,
+                            //               height: 15,
+                            //               child: StepperIcon(),
+                            //             ),
+                            //           ),
+                            //           SvgPicture.string(
+                            //             '<svg viewBox="133.5 797.5 23.0 1.0" ><path transform="translate(133.5, 797.5)" d="M 0 0 L 23 0" fill="none" stroke="#000000" stroke-width="1" stroke-dasharray="5 5" stroke-miterlimit="4" stroke-linecap="butt" /></svg>',
+                            //             allowDrawingOutsideViewBox: true,
+                            //             fit: BoxFit.fill,
+                            //           ),
+                            //           AnimatedOpacity(
+                            //             opacity: 1,
+                            //             duration: Duration(milliseconds: 500),
+                            //             child: SizedBox(
+                            //               width: 15,
+                            //               height: 15,
+                            //               child: StepperIcon(),
+                            //             ),
+                            //           )
+                            //         ],
+                            //       ),
+                            //     ))
+                          ],
                         ),
                         top: 0,
                       )
