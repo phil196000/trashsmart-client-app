@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stacked/stacked.dart';
 import 'package:trashsmart/Components/background_overlay.dart';
 import 'package:trashsmart/Components/service_card.dart';
+import 'package:trashsmart/Screens/schedule/schedule_home_screen.dart';
 
 import 'home_viewmodel.dart';
 
@@ -41,33 +42,57 @@ class Home extends StatelessWidget {
       child: Wrap(
         children: <Widget>[
           ServiceCard(
-              label: "Service 2",
+              label: "Request",
               icon: Icon(
                 Icons.lock_clock,
                 size: 50,
               ),
-              onPressed: () {}),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ScheduleHomeScreen(),
+                    ));
+              }),
           ServiceCard(
-              label: "Service 3",
+              label: "Schedule",
               icon: Icon(
                 Icons.schedule,
                 size: 50,
               ),
-              onPressed: () {}),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ScheduleHomeScreen(),
+                    ));
+              }),
           ServiceCard(
-              label: "Service 4",
+              label: "Buy Items",
               icon: Icon(
                 Icons.shopping_basket,
                 size: 50,
               ),
-              onPressed: () {}),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ScheduleHomeScreen(),
+                    ));
+              }),
           ServiceCard(
-              label: "Service 1",
+              label: "Payment",
               icon: Icon(
                 Icons.credit_card,
                 size: 50,
               ),
-              onPressed: () {}),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ScheduleHomeScreen(),
+                    ));
+              }),
         ],
       ),
     );

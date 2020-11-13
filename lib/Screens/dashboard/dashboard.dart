@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:trashsmart/Screens/home/Home.dart';
+import 'package:trashsmart/Screens/home/home.dart';
 
 import 'dashboard_viewmodel.dart';
 
