@@ -6,7 +6,7 @@ import 'package:trashsmart/Screens/market/Market.dart';
 // import 'package:tra/core/services/service_locator.dart';
 import 'package:trashsmart/app/locator.dart';
 import 'Screens/dashboard/dashboard.dart';
-import 'Screens/home/Home.dart';
+import 'Screens/home/home.dart';
 
 void main() {
   // start services
