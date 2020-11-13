@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:trashsmart/Screens/Splash.dart';
+
+// import 'package:tra/core/services/service_locator.dart';
+import 'package:trashsmart/app/locator.dart';
+import 'Screens/dashboard/dashboard.dart';
+import 'Screens/home/Home.dart';
 
 void main() {
+  // start services
+  setupServiceLocator();
   runApp(MyApp());
 }
 
@@ -31,7 +37,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Splash(),
+      home: DashBoard(),
     );
   }
 }
