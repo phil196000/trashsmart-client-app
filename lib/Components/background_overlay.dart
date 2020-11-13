@@ -24,7 +24,7 @@ class BackgroundOverlay extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Color(0xFFB9D3C5),
                 borderRadius:
-                    BorderRadius.only(bottomLeft: Radius.circular(20.0)),
+                    BorderRadius.only(bottomLeft: Radius.circular(50.0)),
               ),
               height: MediaQuery.of(context).size.height * .35,
             ),
