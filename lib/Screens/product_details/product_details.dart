@@ -57,7 +57,7 @@ class _ProductDetailScreen extends State<ProductDetailScreen>
                 AspectRatio(
                   aspectRatio: 1.2,
                   child: Image.network(
-                      "https://storage.googleapis.com/storage.kumasihive.com/uploads/banner_e9f95535-988a-486f-a219-6f3c6fe0388a"),
+                      "https://image.made-in-china.com/202f0j00nTkReCKqEVpM/100L-120L-240L-Pedal-Type-Foot-Control-Plastic-Outdoor-Dustbin-Waste-Bin.jpg"),
                 ),
               ],
             ),
@@ -96,7 +96,7 @@ class _ProductDetailScreen extends State<ProductDetailScreen>
                             padding: const EdgeInsets.only(
                                 top: 32.0, left: 18, right: 16),
                             child: Text(
-                              'Web Design\nCourse',
+                              'Dust Bins',
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,

@@ -205,14 +205,13 @@ class ScheduleScreen extends State<ScheduleHomeScreen>
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
                     child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 8, right: 8, top: 4, bottom: 4),
+                      padding: const EdgeInsets.only(left: 8, right: 8),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'Times / Week',
+                            'Action ',
                             style: TextStyle(
                                 fontWeight: FontWeight.w100,
                                 fontSize: 16,
@@ -222,7 +221,7 @@ class ScheduleScreen extends State<ScheduleHomeScreen>
                             height: 8,
                           ),
                           Text(
-                            '1  - 2 per Week',
+                            'completed',
                             style: TextStyle(
                               fontWeight: FontWeight.w100,
                               fontSize: 16,
