@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:trashsmart/Screens/Gift/Gift.dart';
+import 'package:trashsmart/Screens/Profile/Profile.dart';
 import 'package:trashsmart/Screens/home/home.dart';
 
 import 'dashboard_viewmodel.dart';
@@ -15,17 +17,7 @@ class DashBoard extends StatefulWidget {
 class _MyStatefulWidgetState extends State<DashBoard> {
   int _selectedIndex = 0;
 
-  List<Widget> _widgetOptions = <Widget>[
-    Home(),
-    Text(
-      'Index 1: Business',
-      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-    ),
-    Text(
-      'Index 2: School',
-      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-    ),
-  ];
+  List<Widget> _widgetOptions = <Widget>[Home(), Gift(), Profile()];
 
   void _onItemTapped(int index) {
     setState(() {

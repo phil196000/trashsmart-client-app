@@ -39,6 +39,7 @@ class Home extends StatelessWidget {
 
   Widget renderServices(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20),
       child: Wrap(
         children: <Widget>[
           ServiceCard(
@@ -105,10 +106,13 @@ class Home extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
+              margin: EdgeInsets.only(left: 20),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  IconButton(icon: Icon(Icons.person), onPressed: () {}),
-                  Text("User")
+                  IconButton(
+                      iconSize: 50, icon: Icon(Icons.person), onPressed: () {}),
+                  Text("Afua Opare-Baidu")
                 ],
               ),
             ),
