@@ -9,6 +9,7 @@ import 'package:trashsmart/Components/Stepper.dart';
 import 'package:trashsmart/Constants/colors.dart';
 
 import 'package:trashsmart/DartAssets/SignUpImage.dart';
+import 'package:trashsmart/Screens/dashboard/dashboard.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -144,7 +145,13 @@ class _SignUpState extends State<SignUp> {
                                 color: primary,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10)),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => DashBoard(),
+                                      ));
+                                },
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 17),

@@ -9,6 +9,7 @@ import 'package:trashsmart/Constants/colors.dart';
 import 'package:trashsmart/DartAssets/LoginImage.dart';
 import 'package:trashsmart/Screens/SignIn.dart';
 import 'package:trashsmart/Screens/SignUp.dart';
+import 'package:trashsmart/Screens/dashboard/dashboard.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -167,7 +168,13 @@ class _SignInState extends State<SignIn> {
                               color: primary,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => DashBoard(),
+                                    ));
+                              },
                               child: Container(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 57, vertical: 17),
