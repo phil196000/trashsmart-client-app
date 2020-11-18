@@ -101,12 +101,12 @@ class ScheduleScreen extends State<ScheduleHomeScreen>
                                 label: "LAbel",
                                 icon: Icon(Icons.ac_unit),
                                 onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            ProductDetailScreen(),
-                                      ));
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //       builder: (context) =>
+                                  //           ProductDetailScreen(),
+                                  //     ));
                                 },
                               );
                             })),

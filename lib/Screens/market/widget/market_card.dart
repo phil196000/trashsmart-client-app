@@ -13,14 +13,16 @@ class MarketCard extends StatelessWidget {
     return InkWell(
       onTap: onPressed,
       child: Container(
+        margin: EdgeInsets.only(bottom: 10),
         // height: 122,
         child: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                width: 200,
-                height: 200,
+                width: 150,
+                height: 150,
                 child: Image.network(
                     "https://image.made-in-china.com/202f0j00nTkReCKqEVpM/100L-120L-240L-Pedal-Type-Foot-Control-Plastic-Outdoor-Dustbin-Waste-Bin.jpg"),
               ),
@@ -31,11 +33,11 @@ class MarketCard extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-                  Row(
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '20-11-2020 at 8:00 am ',
+                        '20ltr Bin ',
                         style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 16,
@@ -47,30 +49,8 @@ class MarketCard extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        'Kentikrono,Nsenie',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                            color: Colors.grey.withOpacity(0.8)),
-                      )
-                    ],
-                  ),
                   SizedBox(
                     height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        'One-time pickup',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                            color: Colors.grey.withOpacity(0.8)),
-                      )
-                    ],
                   ),
                   Divider(
                     height: 5,

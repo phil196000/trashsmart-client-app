@@ -89,11 +89,11 @@ class Home extends StatelessWidget {
                 size: 50,
               ),
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ScheduleHomeScreen(),
-                    ));
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) => ScheduleHomeScreen(),
+                //     ));
               }),
         ],
       ),
