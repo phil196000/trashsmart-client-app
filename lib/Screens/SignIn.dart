@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:developer';
 
 // import 'package:academy/Screens/SignUp.dart';
 import 'package:adobe_xd/adobe_xd.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:trashsmart/Components/DarkGreen.dart';
@@ -19,6 +21,7 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final _passwordController = new TextEditingController();
   final _emailController = new TextEditingController();
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
   String email;
   String password;
   String token;
@@ -236,11 +239,17 @@ class _SignInState extends State<SignIn> {
                         Container(
                           child: FlatButton(
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SignUp(),
-                                  ));
+                              firestore.collection('users').doc().set({
+                                'name': 'Philemon Gumah',
+                                'email': 'gumah@gmail.com',
+                              }).then((value) {
+                                log('success');
+                              }).catchError((error) => log('error'));
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //       builder: (context) => SignUp(),
+                              //     ));
                             },
                             child: Container(
                               child: DarkGreen(

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "839222490752",
+    "firebase_url": "https://trashsmart-3c8e1.firebaseio.com",
+    "project_id": "trashsmart-3c8e1",
+    "storage_bucket": "trashsmart-3c8e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:839222490752:android:50516dba52d728ea04d865",
+        "android_client_info": {
+          "package_name": "com.trashsmart.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "839222490752-el2e9d24a7bm8ru1gp6c6apsktp1rrl2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trashsmart.app",
+            "certificate_hash": "fa56f6baf67f243516134a602689fdd9b5103532"
+          }
+        },
+        {
+          "client_id": "839222490752-dk1qmu52rkd2pg6j1ofda7475ol88ena.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-2KCmt-ll7CnUYybQaJrHpr8ktcSzFPY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "839222490752-dk1qmu52rkd2pg6j1ofda7475ol88ena.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
