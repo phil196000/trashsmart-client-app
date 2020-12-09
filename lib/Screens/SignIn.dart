@@ -4,8 +4,10 @@ import 'dart:developer';
 // import 'package:academy/Screens/SignUp.dart';
 import 'package:adobe_xd/adobe_xd.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trashsmart/Components/DarkGreen.dart';
 import 'package:trashsmart/Constants/colors.dart';
 import 'package:trashsmart/DartAssets/LoginImage.dart';
@@ -21,12 +23,14 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final _passwordController = new TextEditingController();
   final _emailController = new TextEditingController();
+  final _scaffoldKeySignIn = GlobalKey<ScaffoldState>();
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   String email;
   String password;
   String token;
   Map<String, dynamic> emailError = {'visible': false, 'message': null};
   Map<String, dynamic> netWorkError = {'visible': false, 'message': ''};
+  // Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   bool passwordError = false;
   bool visible = true;
@@ -36,9 +40,93 @@ class _SignInState extends State<SignIn> {
     super.initState();
   }
 
+  void signIn(String email, String password) async {
+    setState(() {
+      indicator = true;
+    });
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      if (userCredential.user != null) {
+        setState(() {
+          indicator = false;
+        });
+        _loginCredentials();
+
+        Timer(Duration(seconds: 2), () {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DashBoard(),
+              ),
+              (route) => false);
+        });
+        _scaffoldKeySignIn.currentState.showSnackBar(SnackBar(
+          backgroundColor: Colors.green,
+          content: Container(
+            // color: Colors.yellow,
+            child: Text('Sign in successful, welcome back'),
+          ),
+          duration: Duration(milliseconds: 2000),
+        ));
+      } else {}
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        indicator = false;
+      });
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+        _scaffoldKeySignIn.currentState.showSnackBar(SnackBar(
+          backgroundColor: Colors.red,
+          content: Container(
+            // color: Colors.yellow,
+            child: Text('No user found for that email. Create an account'),
+          ),
+          duration: Duration(milliseconds: 2000),
+        ));
+      } else if (e.code == 'wrong-password') {
+        _scaffoldKeySignIn.currentState.showSnackBar(SnackBar(
+          backgroundColor: Colors.red,
+          content: Container(
+            // color: Colors.yellow,
+            child: Text('Wrong password, try again'),
+          ),
+          duration: Duration(milliseconds: 2000),
+        ));
+      } else {
+        _scaffoldKeySignIn.currentState.showSnackBar(SnackBar(
+          backgroundColor: Colors.red,
+          content: Container(
+            // color: Colors.yellow,
+            child: Text(e.code),
+          ),
+          duration: Duration(milliseconds: 2000),
+        ));
+      }
+    }
+  }
+
+  Future<void> _loginCredentials() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    // final SharedPreferences prefs = await _prefs;
+    final String counter = (_prefs.getString('email') ?? 'Hello');
+    _prefs
+        .setString(
+          "email",
+          _emailController.text.toLowerCase().trim(),
+        )
+        .then((value) => _prefs
+            .setString(
+              "password",
+              _passwordController.text,
+            )
+            .then((value) => log('success')));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKeySignIn,
       body: SafeArea(
         child: SingleChildScrollView(
             child: Container(
@@ -172,20 +260,89 @@ class _SignInState extends State<SignIn> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => DashBoard(),
-                                    ));
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //       builder: (context) => DashBoard(),
+                                //     ));
+                                if (_emailController.text.contains('.') &&
+                                    _emailController.text.contains('@') &&
+                                    _emailController.text.length > 6 &&
+                                    _passwordController.text.length > 7) {
+                                  setState(() {
+                                    emailError = {
+                                      'visible': false,
+                                      'message': null
+                                    };
+                                    passwordError = false;
+                                  });
+                                  signIn(
+                                      _emailController.text
+                                          .toLowerCase()
+                                          .trim(),
+                                      _passwordController.text);
+                                } else {
+                                  setState(() {
+                                    emailError = {
+                                      'visible': false,
+                                      'message': null
+                                    };
+                                    passwordError = false;
+                                  });
+                                }
+                                setState(() {
+                                  if (!_emailController.text.contains('.')) {
+                                    emailError = {
+                                      'visible': true,
+                                      'message': 'Email must contain .'
+                                    };
+                                  }
+                                  if (!_emailController.text.contains('@')) {
+                                    emailError = {
+                                      'visible': true,
+                                      'message': 'Email must contain @'
+                                    };
+                                  }
+
+                                  if (_emailController.text.length < 7) {
+                                    emailError = {
+                                      'visible': true,
+                                      'message':
+                                          'Email must be more that 7 characters'
+                                    };
+                                  }
+                                  if (_passwordController.text.length < 8) {
+                                    passwordError = true;
+                                  }
+                                });
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 57, vertical: 17),
-                                child: Text(
-                                  'Sign In',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Sign In',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Visibility(
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 10),
+                                        width: 20,
+                                        height: 20,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  Colors.white),
+                                        ),
+                                      ),
+                                      visible: indicator,
+                                    )
+                                  ],
                                 ),
                               ),
                             ))
@@ -239,17 +396,17 @@ class _SignInState extends State<SignIn> {
                         Container(
                           child: FlatButton(
                             onPressed: () {
-                              firestore.collection('users').doc().set({
-                                'name': 'Philemon Gumah',
-                                'email': 'gumah@gmail.com',
-                              }).then((value) {
-                                log('success');
-                              }).catchError((error) => log('error'));
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder: (context) => SignUp(),
-                              //     ));
+                              // firestore.collection('users').doc().set({
+                              //   'name': 'Philemon Gumah',
+                              //   'email': 'gumah@gmail.com',
+                              // }).then((value) {
+                              //   log('success');
+                              // }).catchError((error) => log('error'));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SignUp(),
+                                  ));
                             },
                             child: Container(
                               child: DarkGreen(
