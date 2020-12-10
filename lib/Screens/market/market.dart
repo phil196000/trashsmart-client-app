@@ -3,13 +3,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:trashsmart/Constants/colors.dart';
 import 'package:trashsmart/Screens/market/widget/market_card.dart';
 import 'package:trashsmart/Screens/product_details/product_details.dart';
 import 'package:trashsmart/Screens/schedule/theme/schedule_app_theme.dart';
-import 'package:trashsmart/Screens/schedule/widgets/calendar_popup_view.dart';
-import 'package:trashsmart/Screens/schedule/data/schedule_data.dart';
-import 'package:trashsmart/Screens/schedule/widgets/schedule_card.dart';
+import 'package:trashsmart/Screens/schedule/widgets/calendar_popup_view.dart'; 
 
 class MarketScreen extends StatefulWidget {
   @override
@@ -18,7 +15,7 @@ class MarketScreen extends StatefulWidget {
 
 class _MarketScreen extends State<MarketScreen> with TickerProviderStateMixin {
   AnimationController animationController;
-  List<Schedule> scheduleList = Schedule.scheduleList;
+  // List<Schedule> scheduleList = Schedule.scheduleList;
   final ScrollController _scrollController = ScrollController();
 
   DateTime startDate = DateTime.now();

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:trashsmart/Constants/app_theme.dart';
+import 'package:trashsmart/Screens/schedule/data/schedule.dart';
 
 class ScheduleCard extends StatelessWidget {
   final String label;
-  final Icon icon;
+  final Schedule schedule;
   final void Function() onPressed;
-  const ScheduleCard({Key key, this.label, this.icon, this.onPressed})
+  const ScheduleCard({Key key, this.label, this.schedule, this.onPressed})
       : super(key: key);
 
   @override
