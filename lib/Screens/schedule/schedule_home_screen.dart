@@ -1,13 +1,13 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:stacked/stacked.dart';
 import 'package:trashsmart/Constants/colors.dart';
-import 'package:trashsmart/Screens/product_details/product_details.dart';
+import 'package:trashsmart/Screens/schedule/add_schedule_screen.dart';
+import 'package:trashsmart/Screens/schedule/schedule_viewmodel.dart';
 import 'package:trashsmart/Screens/schedule/theme/schedule_app_theme.dart';
 import 'package:trashsmart/Screens/schedule/widgets/calendar_popup_view.dart';
-import 'package:trashsmart/Screens/schedule/data/schedule_data.dart';
 import 'package:trashsmart/Screens/schedule/widgets/schedule_card.dart';
 
 class ScheduleHomeScreen extends StatefulWidget {
@@ -18,7 +18,7 @@ class ScheduleHomeScreen extends StatefulWidget {
 class ScheduleScreen extends State<ScheduleHomeScreen>
     with TickerProviderStateMixin {
   AnimationController animationController;
-  List<Schedule> scheduleList = Schedule.scheduleList;
+
   final ScrollController _scrollController = ScrollController();
 
   DateTime startDate = DateTime.now();
@@ -44,15 +44,22 @@ class ScheduleScreen extends State<ScheduleHomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ScheduleAppTheme.buildLightTheme(),
-      child: Container(
+    return ViewModelBuilder<ScheduleViewModel>.reactive(
+      viewModelBuilder: () => ScheduleViewModel(),
+      builder: (context, model, child) => Theme(
+        data: ScheduleAppTheme.buildLightTheme(),
         child: Scaffold(
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           floatingActionButton: new FloatingActionButton(
             backgroundColor: accent,
-            onPressed: () {},
-            tooltip: 'Increment',
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddScheduleScreen(),
+                  ));
+            },
+            tooltip: 'Add Schedule',
             child: new Icon(
               Icons.add,
             ),
@@ -71,45 +78,46 @@ class ScheduleScreen extends State<ScheduleHomeScreen>
                   getAppBarUI(),
                   Expanded(
                     child: NestedScrollView(
-                        controller: _scrollController,
-                        headerSliverBuilder:
-                            (BuildContext context, bool innerBoxIsScrolled) {
-                          return <Widget>[
-                            SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                                  (BuildContext context, int index) {
-                                return Column(
-                                  children: <Widget>[
-                                    getTimeDateUI(),
-                                  ],
-                                );
-                              }, childCount: 1),
-                            ),
-                            SliverPersistentHeader(
-                              pinned: true,
-                              floating: true,
-                              delegate: ContestTabHeader(
-                                getFilterBarUI(),
-                              ),
-                            ),
-                          ];
-                        },
-                        body: ListView.builder(
-                            itemCount: 7,
-                            itemBuilder: (context, index) {
-                              return ScheduleCard(
-                                label: "LAbel",
-                                icon: Icon(Icons.ac_unit),
-                                onPressed: () {
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //       builder: (context) =>
-                                  //           ProductDetailScreen(),
-                                  //     ));
-                                },
+                      controller: _scrollController,
+                      headerSliverBuilder:
+                          (BuildContext context, bool innerBoxIsScrolled) {
+                        return <Widget>[
+                          SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                                (BuildContext context, int index) {
+                              return Column(
+                                children: <Widget>[
+                                  getTimeDateUI(),
+                                ],
                               );
-                            })),
+                            }, childCount: 1),
+                          ),
+                          SliverPersistentHeader(
+                            pinned: true,
+                            floating: true,
+                            delegate: ContestTabHeader(
+                              getFilterBarUI(),
+                            ),
+                          ),
+                        ];
+                      },
+                      body: ListView.builder(
+                          itemCount: 4,
+                          itemBuilder: (context, index) {
+                            return ScheduleCard(
+                              label: "LAbel",
+                              schedule: model.popularSchedules[index],
+                              onPressed: () {
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //       builder: (context) =>
+                                //           ProductDetailScreen(),
+                                //     ));
+                              },
+                            );
+                          }),
+                    ),
                   ),
                 ],
               ),

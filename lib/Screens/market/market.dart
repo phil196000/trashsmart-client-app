@@ -3,116 +3,94 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:trashsmart/Constants/colors.dart';
+import 'package:stacked/stacked.dart';
+import 'package:trashsmart/Screens/market/market_viewmodel.dart';
 import 'package:trashsmart/Screens/market/widget/market_card.dart';
 import 'package:trashsmart/Screens/product_details/product_details.dart';
 import 'package:trashsmart/Screens/schedule/theme/schedule_app_theme.dart';
-import 'package:trashsmart/Screens/schedule/widgets/calendar_popup_view.dart';
-import 'package:trashsmart/Screens/schedule/data/schedule_data.dart';
-import 'package:trashsmart/Screens/schedule/widgets/schedule_card.dart';
 
-class MarketScreen extends StatefulWidget {
-  @override
-  _MarketScreen createState() => _MarketScreen();
-}
-
-class _MarketScreen extends State<MarketScreen> with TickerProviderStateMixin {
-  AnimationController animationController;
-  List<Schedule> scheduleList = Schedule.scheduleList;
-  final ScrollController _scrollController = ScrollController();
-
+class MarketScreen extends StatelessWidget {
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now().add(const Duration(days: 5));
 
   @override
-  void initState() {
-    animationController = AnimationController(
-        duration: const Duration(milliseconds: 1000), vsync: this);
-    super.initState();
-  }
-
-  Future<bool> getData() async {
-    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
-    return true;
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ScheduleAppTheme.buildLightTheme(),
-      child: Container(
-        child: Scaffold(
-          body: Stack(children: <Widget>[
-            InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              onTap: () {
-                FocusScope.of(context).requestFocus(FocusNode());
-              },
-              child: Column(
-                children: <Widget>[
-                  getAppBarUI(),
-                  Expanded(
-                    child: NestedScrollView(
-                        controller: _scrollController,
-                        headerSliverBuilder:
-                            (BuildContext context, bool innerBoxIsScrolled) {
-                          return <Widget>[
-                            SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                                  (BuildContext context, int index) {
-                                return Column(
-                                  children: <Widget>[
-                                    getSearchBarUI(),
-                                    getTimeDateUI(),
-                                  ],
-                                );
-                              }, childCount: 1),
-                            ),
-                            SliverPersistentHeader(
-                              pinned: true,
-                              floating: true,
-                              delegate: ContestTabHeader(
-                                getFilterBarUI(),
+    return ViewModelBuilder<MarketViewModel>.reactive(
+      viewModelBuilder: () => MarketViewModel(),
+      builder: (context, model, child) => Theme(
+        data: ScheduleAppTheme.buildLightTheme(),
+        child: Container(
+          child: Scaffold(
+            body: Stack(children: <Widget>[
+              InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                onTap: () {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                },
+                child: Column(
+                  children: <Widget>[
+                    getAppBarUI(context),
+                    Expanded(
+                      child: NestedScrollView(
+                          headerSliverBuilder:
+                              (BuildContext context, bool innerBoxIsScrolled) {
+                            return <Widget>[
+                              SliverList(
+                                delegate: SliverChildBuilderDelegate(
+                                    (BuildContext context, int index) {
+                                  return Column(
+                                    children: <Widget>[
+                                      getSearchBarUI(context),
+                                      getTimeDateUI(context),
+                                    ],
+                                  );
+                                }, childCount: 1),
                               ),
-                            ),
-                          ];
-                        },
-                        body: ListView.builder(
-                            itemCount: 7,
-                            itemBuilder: (context, index) {
-                              return MarketCard(
-                                label: "LAbel",
-                                icon: Icon(Icons.ac_unit),
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            ProductDetailScreen(),
-                                      ));
-                                },
-                              );
-                            })),
-                  ),
-                ],
+                              SliverPersistentHeader(
+                                pinned: true,
+                                floating: true,
+                                delegate: ContestTabHeader(
+                                  getFilterBarUI(context),
+                                ),
+                              ),
+                            ];
+                          },
+                          body: ListView.builder(
+                              itemCount: model.popularProducts.length,
+                              itemBuilder: (context, index) {
+                                return MarketCard(
+                                  name: model.popularProducts[index].name,
+                                  price: model.popularProducts[index].price,
+                                  image: model.popularProducts[index].image,
+                                  description:
+                                      model.popularProducts[index].description,
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ProductDetailScreen(
+                                                  product: model
+                                                      .popularProducts[index]),
+                                        ));
+                                  },
+                                );
+                              })),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ]),
+            ]),
+          ),
         ),
       ),
     );
   }
 
-  Widget getSearchBarUI() {
+  Widget getSearchBarUI(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
       child: Row(
@@ -192,7 +170,7 @@ class _MarketScreen extends State<MarketScreen> with TickerProviderStateMixin {
   // Use this as the template
   // ScheduleListView()
 
-  Widget getTimeDateUI() {
+  Widget getTimeDateUI(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 18, bottom: 16),
       child: Row(
@@ -215,7 +193,7 @@ class _MarketScreen extends State<MarketScreen> with TickerProviderStateMixin {
                       // setState(() {
                       //   isDatePopupOpen = true;
                       // });
-                      showDemoDialog(context: context);
+                      // showDemoDialog(context: context);
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(
@@ -309,7 +287,7 @@ class _MarketScreen extends State<MarketScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget getFilterBarUI() {
+  Widget getFilterBarUI(BuildContext context) {
     return Stack(
       children: <Widget>[
         Positioned(
@@ -364,29 +342,7 @@ class _MarketScreen extends State<MarketScreen> with TickerProviderStateMixin {
     );
   }
 
-  void showDemoDialog({BuildContext context}) {
-    showDialog<dynamic>(
-      context: context,
-      builder: (BuildContext context) => CalendarPopupView(
-        barrierDismissible: true,
-        minimumDate: DateTime.now(),
-        //  maximumDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 10),
-        initialEndDate: endDate,
-        initialStartDate: startDate,
-        onApplyClick: (DateTime startData, DateTime endData) {
-          setState(() {
-            if (startData != null && endData != null) {
-              startDate = startData;
-              endDate = endData;
-            }
-          });
-        },
-        onCancelClick: () {},
-      ),
-    );
-  }
-
-  Widget getAppBarUI() {
+  Widget getAppBarUI(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: ScheduleAppTheme.buildLightTheme().backgroundColor,

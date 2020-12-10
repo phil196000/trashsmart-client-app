@@ -43,19 +43,19 @@ class Home extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Wrap(
         children: <Widget>[
-          ServiceCard(
-              label: "Request",
-              icon: Icon(
-                Icons.lock_clock,
-                size: 50,
-              ),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ScheduleHomeScreen(),
-                    ));
-              }),
+          // ServiceCard(
+          //     label: "Request",
+          //     icon: Icon(
+          //       Icons.lock_clock,
+          //       size: 50,
+          //     ),
+          //     onPressed: () {
+          //       Navigator.push(
+          //           context,
+          //           MaterialPageRoute(
+          //             builder: (context) => ScheduleHomeScreen(),
+          //           ));
+          //     }),
           ServiceCard(
               label: "Schedule",
               icon: Icon(
@@ -112,7 +112,7 @@ class Home extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   IconButton(
-                      iconSize: 50, icon: Icon(Icons.person), onPressed: () {}),
+                      iconSize: 30, icon: Icon(Icons.person), onPressed: () {}),
                   Text("Afua Opare-Baidu")
                 ],
               ),

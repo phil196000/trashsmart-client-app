@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:trashsmart/Constants/app_theme.dart';
-import 'package:trashsmart/Screens/schedule/data/schedule_data.dart';
+import 'package:trashsmart/Screens/schedule/data/schedule.dart';
 import 'package:trashsmart/core/utils/hex_color_utility.dart';
 
 class ScheduleListView extends StatefulWidget {
-  const ScheduleListView({Key key, this.callBack}) : super(key: key);
+  const ScheduleListView({Key key, this.callBack, this.scheduleList})
+      : super(key: key);
 
+  final List<Schedule> scheduleList;
   final Function() callBack;
   @override
   _ScheduleListViewState createState() => _ScheduleListViewState();
@@ -14,6 +16,8 @@ class ScheduleListView extends StatefulWidget {
 class _ScheduleListViewState extends State<ScheduleListView>
     with TickerProviderStateMixin {
   AnimationController animationController;
+
+  List<Schedule> scheduleList;
 
   @override
   void initState() {
@@ -43,9 +47,8 @@ class _ScheduleListViewState extends State<ScheduleListView>
               itemCount: 3,
               scrollDirection: Axis.vertical,
               itemBuilder: (BuildContext context, int index) {
-                final int count = Schedule.scheduleList.length > 10
-                    ? 10
-                    : Schedule.scheduleList.length;
+                final int count =
+                    scheduleList.length > 10 ? 10 : scheduleList.length;
                 final Animation<double> animation =
                     Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
                         parent: animationController,
@@ -53,8 +56,9 @@ class _ScheduleListViewState extends State<ScheduleListView>
                             curve: Curves.fastOutSlowIn)));
                 animationController.forward();
 
+                //Renders a specific Schedules
                 return ScheduleView(
-                  schedule: Schedule.scheduleList[index],
+                  schedule: scheduleList[index],
                   animation: animation,
                   animationController: animationController,
                   callback: () {
@@ -160,7 +164,7 @@ class ScheduleView extends StatelessWidget {
                                                   child: Row(
                                                     children: <Widget>[
                                                       Text(
-                                                        '${schedule.rating}',
+                                                        'Initially Has Rating',
                                                         textAlign:
                                                             TextAlign.left,
                                                         style: TextStyle(

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:trashsmart/Constants/app_theme.dart';
+import 'package:trashsmart/Screens/schedule/data/schedule.dart';
 
 class ScheduleCard extends StatelessWidget {
   final String label;
-  final Icon icon;
+  final Schedule schedule;
   final void Function() onPressed;
-  const ScheduleCard({Key key, this.label, this.icon, this.onPressed})
+  const ScheduleCard({Key key, this.label, this.schedule, this.onPressed})
       : super(key: key);
 
   @override
@@ -33,7 +34,7 @@ class ScheduleCard extends StatelessWidget {
                         fontSize: 16,
                         color: Colors.grey.withOpacity(0.8)),
                   ),
-                  Text('GHC450', style: AppTheme.body2),
+                  Text(schedule.money.toString(), style: AppTheme.body2),
                 ],
               ),
               SizedBox(
@@ -42,7 +43,7 @@ class ScheduleCard extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    'Kentikrono,Nsenie',
+                    schedule.name,
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 16,
