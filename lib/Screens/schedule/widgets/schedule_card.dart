@@ -34,7 +34,7 @@ class ScheduleCard extends StatelessWidget {
                         fontSize: 16,
                         color: Colors.grey.withOpacity(0.8)),
                   ),
-                  Text('GHC450', style: AppTheme.body2),
+                  Text(schedule.money.toString(), style: AppTheme.body2),
                 ],
               ),
               SizedBox(
@@ -43,7 +43,7 @@ class ScheduleCard extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    'Kentikrono,Nsenie',
+                    schedule.name,
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 16,

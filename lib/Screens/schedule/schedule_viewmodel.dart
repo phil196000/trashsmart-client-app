@@ -9,28 +9,24 @@ import 'package:trashsmart/Screens/schedule/data/schedule.dart';
 class ScheduleViewModel extends BaseViewModel {
   List<Schedule> get popularSchedules => <Schedule>[
         Schedule(
-          name: 'App Design Course',
+          name: 'KentinKrono',
           time: 12,
-          money: 25,
-          rating: 4.8,
+          money: 250,
         ),
         Schedule(
-          name: 'Web Design Course',
+          name: 'Nsenie',
           time: 28,
           money: 208,
-          rating: 4.9,
         ),
         Schedule(
-          name: 'App Design Course',
+          name: 'Boadi',
           time: 12,
           money: 25,
-          rating: 4.8,
         ),
         Schedule(
-          name: 'Web Design Course',
+          name: 'Ejisu',
           time: 28,
           money: 208,
-          rating: 4.9,
         ),
       ];
 

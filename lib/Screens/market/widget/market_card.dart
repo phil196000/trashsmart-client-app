@@ -2,10 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:trashsmart/Constants/app_theme.dart';
 
 class MarketCard extends StatelessWidget {
-  final String label;
-  final Icon icon;
+  final String name;
+  final double price;
+  final String image;
+  final String description;
   final void Function() onPressed;
-  const MarketCard({Key key, this.label, this.icon, this.onPressed})
+  const MarketCard(
+      {Key key,
+      this.name,
+      this.price,
+      this.image,
+      this.description,
+      this.onPressed})
       : super(key: key);
 
   @override
@@ -23,8 +31,7 @@ class MarketCard extends StatelessWidget {
               Container(
                 width: 150,
                 height: 150,
-                child: Image.network(
-                    "https://image.made-in-china.com/202f0j00nTkReCKqEVpM/100L-120L-240L-Pedal-Type-Foot-Control-Plastic-Outdoor-Dustbin-Waste-Bin.jpg"),
+                child: Image.network(this.image),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -37,13 +44,14 @@ class MarketCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '20ltr Bin ',
+                        this.name,
                         style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 16,
                             color: Colors.grey.withOpacity(0.8)),
                       ),
-                      Text('GHC450', style: AppTheme.body2),
+                      Text('GHC' + this.price.toString(),
+                          style: AppTheme.body2),
                     ],
                   ),
                   SizedBox(

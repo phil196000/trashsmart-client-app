@@ -164,7 +164,7 @@ class ScheduleView extends StatelessWidget {
                                                   child: Row(
                                                     children: <Widget>[
                                                       Text(
-                                                        '${schedule.rating}',
+                                                        'Initially Has Rating',
                                                         textAlign:
                                                             TextAlign.left,
                                                         style: TextStyle(

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:trashsmart/Screens/product_details/theme/product_details_theme.dart';
+import 'package:trashsmart/core/models/product.dart';
 
 class ProductDetailScreen extends StatefulWidget {
+  final Product product;
+
+  const ProductDetailScreen({Key key, this.product}) : super(key: key);
   @override
   _ProductDetailScreen createState() => _ProductDetailScreen();
 }
@@ -56,8 +60,7 @@ class _ProductDetailScreen extends State<ProductDetailScreen>
               children: <Widget>[
                 AspectRatio(
                   aspectRatio: 1.2,
-                  child: Image.network(
-                      "https://image.made-in-china.com/202f0j00nTkReCKqEVpM/100L-120L-240L-Pedal-Type-Foot-Control-Plastic-Outdoor-Dustbin-Waste-Bin.jpg"),
+                  child: Image.network(widget.product.image),
                 ),
               ],
             ),
@@ -96,7 +99,7 @@ class _ProductDetailScreen extends State<ProductDetailScreen>
                             padding: const EdgeInsets.only(
                                 top: 32.0, left: 18, right: 16),
                             child: Text(
-                              'Dust Bins',
+                              widget.product.name,
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
@@ -114,7 +117,7 @@ class _ProductDetailScreen extends State<ProductDetailScreen>
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Text(
-                                  'GH\₵980',
+                                  'GHC' + widget.product.price.toString(),
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w200,
@@ -155,9 +158,9 @@ class _ProductDetailScreen extends State<ProductDetailScreen>
                               padding: const EdgeInsets.all(8),
                               child: Row(
                                 children: <Widget>[
-                                  getTimeBoxUI('24', 'Data'),
-                                  getTimeBoxUI('2hours', 'Data'),
-                                  getTimeBoxUI('24', 'Data'),
+                                  // getTimeBoxUI('24', 'Data'),
+                                  // getTimeBoxUI('2hours', 'Data'),
+                                  // getTimeBoxUI('24', 'Data'),
                                 ],
                               ),
                             ),
@@ -170,7 +173,7 @@ class _ProductDetailScreen extends State<ProductDetailScreen>
                                 padding: const EdgeInsets.only(
                                     left: 16, right: 16, top: 8, bottom: 8),
                                 child: Text(
-                                  'Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.',
+                                  widget.product.description,
                                   textAlign: TextAlign.justify,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w200,
