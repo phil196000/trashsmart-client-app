@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stacked/stacked.dart';
 import 'package:trashsmart/Components/background_overlay.dart';
-import 'package:trashsmart/Components/service_card.dart';
-import 'package:trashsmart/Screens/market/market.dart';
+import 'package:trashsmart/Components/service_card.dart'; 
+import 'package:trashsmart/Screens/market/market_store.dart';
 import 'package:trashsmart/Screens/schedule/schedule_home_screen.dart';
 
 import 'home_viewmodel.dart';
