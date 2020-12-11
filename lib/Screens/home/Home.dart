@@ -79,7 +79,7 @@ class Home extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MarketScreen(),
+                      builder: (context) => MarketStore(),
                     ));
               }),
           ServiceCard(
