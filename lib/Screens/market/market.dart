@@ -10,8 +10,8 @@ import 'package:trashsmart/Screens/product_details/product_details.dart';
 import 'package:trashsmart/Screens/schedule/theme/schedule_app_theme.dart';
 
 class MarketScreen extends StatelessWidget {
-  DateTime startDate = DateTime.now();
-  DateTime endDate = DateTime.now().add(const Duration(days: 5));
+  final DateTime startDate = DateTime.now();
+  final DateTime endDate = DateTime.now().add(const Duration(days: 5));
 
   @override
   Widget build(BuildContext context) {
