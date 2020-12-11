@@ -8,7 +8,7 @@ import 'package:trashsmart/Screens/market/widget/market_card.dart';
 import 'package:trashsmart/Screens/product_details/product_details.dart';
 import 'package:trashsmart/Screens/schedule/theme/schedule_app_theme.dart';
 
-class MarketScreen extends StatelessWidget {
+class MarketStore extends StatelessWidget {
   final DateTime startDate = DateTime.now();
   final DateTime endDate = DateTime.now().add(const Duration(days: 5));
 

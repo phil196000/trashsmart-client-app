@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trashsmart/Screens/Profile/Profile.dart';
 import 'package:trashsmart/Screens/Splash.dart';
-import 'package:trashsmart/Screens/market/market.dart';
+import 'package:trashsmart/Screens/market/market_store.dart';
 
 // import 'package:tra/core/services/service_locator.dart';
 import 'package:trashsmart/app/locator.dart';
