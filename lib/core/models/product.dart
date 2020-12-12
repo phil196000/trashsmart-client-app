@@ -3,6 +3,7 @@ class Product {
   final double price;
   final String description;
   final String image;
+  final int stock;
 
-  Product({this.name, this.price, this.description, this.image});
+  Product({this.name, this.price, this.description, this.image, this.stock});
 }
