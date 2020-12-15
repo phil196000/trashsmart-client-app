@@ -52,7 +52,7 @@ class MarketCard extends StatelessWidget {
                             fontSize: 16,
                             color: Colors.grey.withOpacity(0.8)),
                       ),
-                      Text('GHC' + this.price.toString(),
+                      Text('GHC' + (this.price.toString() ?? "0.00"),
                           style: AppTheme.body2),
                     ],
                   ),
