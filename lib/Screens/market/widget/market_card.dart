@@ -26,12 +26,14 @@ class MarketCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                width: 150,
-                height: 150,
-                child: Image.network(this.image),
+                width: 120,
+                height: 120,
+                child: Image.network(
+                  this.image,
+                ),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -69,6 +71,9 @@ class MarketCard extends StatelessWidget {
                     height: 10,
                   ),
                 ],
+              ),
+              SizedBox(
+                width: 20,
               ),
             ],
           ),
