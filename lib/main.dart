@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:trashsmart/Screens/Splash.dart';
 import 'package:trashsmart/app/locator.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   // start services
   setupServiceLocator();
-  runApp(MyApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) => runApp(MyApp()));
 }
 
 class MyApp extends StatelessWidget {

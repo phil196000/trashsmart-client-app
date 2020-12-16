@@ -57,27 +57,32 @@ class MarketStore extends StatelessWidget {
                               ),
                             ];
                           },
-                          body: ListView.builder(
-                              itemCount: model.popularProducts.length,
-                              itemBuilder: (context, index) {
-                                return MarketCard(
-                                  name: model.popularProducts[index].name,
-                                  price: model.popularProducts[index].price,
-                                  image: model.popularProducts[index].image,
-                                  description:
-                                      model.popularProducts[index].description,
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              ProductDetailScreen(
-                                                  product: model
-                                                      .popularProducts[index]),
-                                        ));
-                                  },
-                                );
-                              })),
+                          body: model.isBusy
+                              ? Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              : ListView.builder(
+                                  itemCount: model.popularProducts.length,
+                                  itemBuilder: (context, index) {
+                                    return MarketCard(
+                                      name: model.popularProducts[index].name,
+                                      price: model.popularProducts[index].price,
+                                      image: model.popularProducts[index].image,
+                                      description: model
+                                          .popularProducts[index].description,
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ProductDetailScreen(
+                                                      product:
+                                                          model.popularProducts[
+                                                              index]),
+                                            ));
+                                      },
+                                    );
+                                  })),
                     ),
                   ],
                 ),
