@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trashsmart/Components/DarkGreen.dart';
 import 'package:trashsmart/Constants/colors.dart';
 import 'package:trashsmart/DartAssets/LoginImage.dart';
+import 'package:trashsmart/Screens/ForgotPassword.dart';
 import 'package:trashsmart/Screens/SignIn.dart';
 import 'package:trashsmart/Screens/SignUp.dart';
 import 'package:trashsmart/Screens/dashboard/dashboard.dart';
@@ -51,24 +52,79 @@ class _SignInState extends State<SignIn> {
         setState(() {
           indicator = false;
         });
-        _loginCredentials();
+        // _loginCredentials();
+        firestore
+            .collection('users')
+            .where('email', isEqualTo: email)
+            .get()
+            .then((value) {
+          setState(() {
+            indicator = false;
+          });
+          if (value.docs.isNotEmpty) {
+            value.docs.forEach((element) {
+              _loginCredentials();
 
-        Timer(Duration(seconds: 2), () {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DashBoard(),
+              Timer(Duration(seconds: 2), () {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DashBoard(
+                              id: element.id,
+                            )),
+                    (route) => false);
+              });
+              _scaffoldKeySignIn.currentState.showSnackBar(SnackBar(
+                backgroundColor: Colors.green,
+                content: Container(
+                  // color: Colors.yellow,
+                  child: Text('Sign in successful, welcome back'),
+                ),
+                duration: Duration(milliseconds: 2000),
+              ));
+            });
+          } else {
+            Timer(Duration(seconds: 2), () {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignIn()),
+                  (route) => false);
+            });
+            _scaffoldKeySignIn.currentState.showSnackBar(SnackBar(
+              backgroundColor: Colors.red,
+              content: Container(
+                // color: Colors.yellow,
+                child: Text('User cannot be found, create account'),
               ),
-              (route) => false);
+              duration: Duration(milliseconds: 2000),
+            ));
+          }
+        }).catchError((onError) {
+          _scaffoldKeySignIn.currentState.showSnackBar(SnackBar(
+            backgroundColor: Colors.red,
+            content: Container(
+              // color: Colors.yellow,
+              child: Text('An error occurred, try again'),
+            ),
+            duration: Duration(milliseconds: 2000),
+          ));
         });
-        _scaffoldKeySignIn.currentState.showSnackBar(SnackBar(
-          backgroundColor: Colors.green,
-          content: Container(
-            // color: Colors.yellow,
-            child: Text('Sign in successful, welcome back'),
-          ),
-          duration: Duration(milliseconds: 2000),
-        ));
+        // Timer(Duration(seconds: 2), () {
+        //   Navigator.pushAndRemoveUntil(
+        //       context,
+        //       MaterialPageRoute(
+        //         builder: (context) => DashBoard(id: ,),
+        //       ),
+        //       (route) => false);
+        // });
+        // _scaffoldKeySignIn.currentState.showSnackBar(SnackBar(
+        //   backgroundColor: Colors.green,
+        //   content: Container(
+        //     // color: Colors.yellow,
+        //     child: Text('Sign in successful, welcome back'),
+        //   ),
+        //   duration: Duration(milliseconds: 2000),
+        // ));
       } else {}
     } on FirebaseAuthException catch (e) {
       setState(() {
@@ -245,7 +301,25 @@ class _SignInState extends State<SignIn> {
                         Align(
                           alignment: Alignment.centerRight,
                           child: FlatButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  backgroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(50),
+                                          topRight: Radius.circular(50))),
+                                  enableDrag: false,
+                                  isScrollControlled: true,
+                                  builder: (context) {
+                                    return Container(
+                                      child: ForgotPassword(
+                                        scaffoldKeySignIn: _scaffoldKeySignIn,
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
                               child: Container(
                                 child: Text(
                                   'Forgot Password?',

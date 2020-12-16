@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:trashsmart/Components/BackButton.dart';
 import 'package:trashsmart/Components/DarkGreen.dart';
@@ -5,23 +8,59 @@ import 'package:trashsmart/Components/background_overlay.dart';
 import 'package:trashsmart/Constants/colors.dart';
 
 class Profile extends StatefulWidget {
+  final String id;
+
+  const Profile({Key key, this.id}) : super(key: key);
   @override
   _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
-  final _passwordController = new TextEditingController();
-  final _emailController = new TextEditingController();
+  TextEditingController _passwordController;
+  TextEditingController _phoneNumberController;
+  TextEditingController _emailController;
+  TextEditingController _fullnameController;
   String email;
   String password;
   String token;
   bool edit = false;
   Map<String, dynamic> emailError = {'visible': false, 'message': null};
   Map<String, dynamic> netWorkError = {'visible': false, 'message': ''};
-
+  Map<String, dynamic> userData = {
+    'full_name': '',
+    'email': '',
+    'created_at': '',
+    'subscribed': false,
+    'image_url': ''
+  };
   bool passwordError = false;
   bool visible = true;
   bool indicator = false;
+  @override
+  void initState() {
+    super.initState();
+    log(this.widget.id);
+    getUser();
+  }
+
+  void getUser() {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    firestore.collection('users').doc(this.widget.id).get().then((value) {
+      if (value.exists) {
+        _emailController = TextEditingController(text: value.data()['email']);
+        _fullnameController =
+            TextEditingController(text: value.data()['full_name']);
+        _phoneNumberController =
+            TextEditingController(text: value.data()['phone_number']);
+        log(value.data().toString());
+        this.setState(() {
+          userData = value.data();
+        });
+      }
+    }).catchError((onError) {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,25 +112,26 @@ class _ProfileState extends State<Profile> {
                       children: [
                         Container(
                           margin: EdgeInsets.only(top: 30),
-                          child: CircleAvatar(
-                            radius: 70,
-                            backgroundColor: primary,
-                            child: Text(
-                              'PG',
-                              style: TextStyle(fontSize: 40),
-                            ),
+                          width: 170,
+                          height: 170,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(170),
+                            child: userData['image_url'].contains('firebase')
+                                ? Image.network(userData['image_url'])
+                                : Image.asset('lib/assets/logo.png'),
                           ),
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 15),
                           child: TextField(
-                            controller: _emailController,
+                            enabled: edit,
+                            controller: _fullnameController,
                             style: TextStyle(
                               color: primary,
                             ),
                             decoration: InputDecoration(
                                 prefixIcon: Container(
-                                  width: 200,
+                                  width: 150,
                                   padding: EdgeInsets.only(left: 15),
                                   alignment: Alignment.centerLeft,
                                   child: DarkGreen(text: 'Full Name'),
@@ -121,7 +161,8 @@ class _ProfileState extends State<Profile> {
                         Container(
                           margin: EdgeInsets.only(top: 15),
                           child: TextField(
-                            controller: _emailController,
+                            enabled: edit,
+                            controller: _phoneNumberController,
                             style: TextStyle(
                               color: primary,
                             ),
@@ -157,13 +198,14 @@ class _ProfileState extends State<Profile> {
                         Container(
                           margin: EdgeInsets.only(top: 15),
                           child: TextField(
+                            enabled: edit,
                             controller: _emailController,
                             style: TextStyle(
                               color: primary,
                             ),
                             decoration: InputDecoration(
                                 prefixIcon: Container(
-                                  width: 200,
+                                  width: 120,
                                   padding: EdgeInsets.only(left: 15),
                                   alignment: Alignment.centerLeft,
                                   child: DarkGreen(text: 'Email'),

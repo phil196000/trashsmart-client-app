@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 // import 'package:academy/Screens/SignUp.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trashsmart/Screens/Home.dart';
 import 'package:trashsmart/Screens/SignIn.dart';
 
 import 'dashboard/dashboard.dart';
@@ -86,30 +88,84 @@ class _SplashState extends State<Splash> {
     setState(() {
       indicator = true;
     });
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       if (userCredential.user != null) {
-        setState(() {
-          indicator = false;
-        });
+        firestore
+            .collection('users')
+            .where('email', isEqualTo: email)
+            .get()
+            .then((value) {
+          setState(() {
+            indicator = false;
+          });
+          if (value.docs.isNotEmpty) {
+            value.docs.forEach((element) {
+              // _loginCredentials();
 
-        Timer(Duration(seconds: 2), () {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DashBoard(),
+              Timer(Duration(seconds: 2), () {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DashBoard(
+                              id: element.id,
+                            )),
+                    (route) => false);
+              });
+              _scaffoldKeySplash.currentState.showSnackBar(SnackBar(
+                backgroundColor: Colors.green,
+                content: Container(
+                  // color: Colors.yellow,
+                  child: Text('Sign in successful, welcome back'),
+                ),
+                duration: Duration(milliseconds: 2000),
+              ));
+            });
+          } else {
+            Timer(Duration(seconds: 2), () {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignIn()),
+                  (route) => false);
+            });
+            _scaffoldKeySplash.currentState.showSnackBar(SnackBar(
+              backgroundColor: Colors.red,
+              content: Container(
+                // color: Colors.yellow,
+                child: Text('User cannot be found, create account'),
               ),
-              (route) => false);
+              duration: Duration(milliseconds: 2000),
+            ));
+          }
+        }).catchError((onError) {
+          _scaffoldKeySplash.currentState.showSnackBar(SnackBar(
+            backgroundColor: Colors.red,
+            content: Container(
+              // color: Colors.yellow,
+              child: Text('An error occurred, try again'),
+            ),
+            duration: Duration(milliseconds: 2000),
+          ));
         });
-        _scaffoldKeySplash.currentState.showSnackBar(SnackBar(
-          backgroundColor: Colors.green,
-          content: Container(
-            // color: Colors.yellow,
-            child: Text('Sign in successful, welcome back'),
-          ),
-          duration: Duration(milliseconds: 2000),
-        ));
+        // Timer(Duration(seconds: 2), () {
+        //   Navigator.pushAndRemoveUntil(
+        //       context,
+        //       MaterialPageRoute(
+        //         builder: (context) => DashBoard(),
+        //       ),
+        //       (route) => false);
+        // });
+        // _scaffoldKeySplash.currentState.showSnackBar(SnackBar(
+        //   backgroundColor: Colors.green,
+        //   content: Container(
+        //     // color: Colors.yellow,
+        //     child: Text('Sign in successful, welcome back'),
+        //   ),
+        //   duration: Duration(milliseconds: 2000),
+        // ));
       } else {}
     } on FirebaseAuthException catch (e) {
       setState(() {

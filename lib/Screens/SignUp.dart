@@ -56,7 +56,8 @@ class _SignUpState extends State<SignUp> {
           'email': email,
           'created_at': now,
           'subscribed': false,
-          'role': 'user'
+          'role': 'user',
+          'image_url': ''
         }).then((value) {
           // log('success');
           setState(() {
