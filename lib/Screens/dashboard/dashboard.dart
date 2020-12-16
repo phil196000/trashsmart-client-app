@@ -7,17 +7,36 @@ import 'package:trashsmart/Screens/home/home.dart';
 import 'dashboard_viewmodel.dart';
 
 class DashBoard extends StatefulWidget {
-  DashBoard({Key key}) : super(key: key);
+  final String id;
+  DashBoard({Key key, this.id}) : super(key: key);
 
   @override
-  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
+  _MyStatefulWidgetState createState() => _MyStatefulWidgetState(id);
 }
 
 /// This is the private State class that goes with MyStatefulWidget.
 class _MyStatefulWidgetState extends State<DashBoard> {
   int _selectedIndex = 0;
-
-  List<Widget> _widgetOptions = <Widget>[Home(), Gift(), Profile()];
+  final String id;
+  _MyStatefulWidgetState(this.id);
+  Widget _widgetOptions(item) {
+    List dashboard = [
+      Home(),
+      Gift(),
+      Profile(
+        id: this.id,
+      )
+    ];
+    Widget screen = dashboard.elementAt(item);
+    return screen;
+  }
+  // List<Widget> _widgetOptions = <Widget>[
+  //   Home(),
+  //   Gift(),
+  //   Profile(
+  //     id: this.id,
+  //   )
+  // ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -30,7 +49,7 @@ class _MyStatefulWidgetState extends State<DashBoard> {
     return ViewModelBuilder<DashBoardViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
         body: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
+          child: _widgetOptions(_selectedIndex),
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[

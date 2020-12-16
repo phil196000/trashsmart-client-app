@@ -1,14 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:trashsmart/Components/background_overlay.dart';
 import 'package:trashsmart/Components/service_card.dart';
+import 'package:trashsmart/Constants/colors.dart';
+import 'package:trashsmart/Screens/SignIn.dart';
 import 'package:trashsmart/Screens/market/market_store.dart';
 import 'package:trashsmart/Screens/schedule/schedule_home_screen.dart';
 
 import 'home_viewmodel.dart';
 
 class Home extends StatelessWidget {
-  const Home({Key key}) : super(key: key);
+  final String id;
+  Home({Key key, this.id}) : super(key: key);
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  Future<void> _logout(BuildContext context) async {
+    final SharedPreferences prefs = await _prefs;
+    // final String counter = (prefs.getString('email') ?? 'Hello');
+    prefs.clear().then((value) => Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SignIn(),
+        ),
+        (route) => false));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +73,7 @@ class Home extends StatelessWidget {
           //     }),
           ServiceCard(
               label: "Schedule",
+              color: primary,
               icon: Icon(
                 Icons.schedule,
                 size: 50,
@@ -70,6 +87,7 @@ class Home extends StatelessWidget {
               }),
           ServiceCard(
               label: "Buy Items",
+              color: accent,
               icon: Icon(
                 Icons.shopping_basket,
                 size: 50,
@@ -109,14 +127,14 @@ class Home extends StatelessWidget {
               margin: EdgeInsets.only(left: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  IconButton(
-                      iconSize: 30, icon: Icon(Icons.person), onPressed: () {}),
-                  Text("Afua Opare-Baidu")
-                ],
+                children: [Text('Hello,'), Text("Welcome")],
               ),
             ),
-            IconButton(icon: Icon(Icons.settings), onPressed: () {})
+            Container(
+              padding: EdgeInsets.only(right: 15),
+              child: IconButton(
+                  icon: Icon(Icons.logout), onPressed: () => _logout(context)),
+            )
           ],
         ),
       ],
