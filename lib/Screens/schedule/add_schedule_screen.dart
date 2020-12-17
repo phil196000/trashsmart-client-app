@@ -1,9 +1,11 @@
 import 'dart:ui';
+import 'package:auto_route/auto_route_annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:stacked/stacked.dart';
 import 'package:trashsmart/Screens/schedule/data/schedule.dart';
+import 'package:trashsmart/Screens/schedule/schedule_home_screen.dart';
 import 'package:trashsmart/Screens/schedule/schedule_viewmodel.dart';
 import 'package:trashsmart/Screens/schedule/theme/schedule_app_theme.dart';
 // import 'package:flutter/material.dart';
@@ -68,52 +70,31 @@ class AddScheduleScreen extends StatelessWidget {
               padding: new EdgeInsets.all(8.0),
             ),
             new Text(
-              'Select Schedule Type ' + model.scheduleTypeValue.toString(),
+              'Select Schedule Type ',
               style: new TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18.0,
               ),
             ),
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                ActionChip(
-                  avatar: CircleAvatar(
-                    child: Text("O"),
-                  ),
-                  label: Text('One time '),
-                  autofocus: true,
-                  // backgroundColor: Colors.amberAccent,
-                  onPressed: () =>
-                      model.handleScheduleTypeChange(ScheduleType.ONE_TIME),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                ActionChip(
-                  avatar: CircleAvatar(
-                    child: Text("W"),
-                  ),
-                  label: Text('Weekly'),
-                  autofocus: true,
-                  // backgroundColor: Colors.amberAccent,
-                  onPressed: () =>
-                      model.handleScheduleTypeChange(ScheduleType.WEEKLY),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                ActionChip(
-                  avatar: CircleAvatar(
-                    child: Text("M"),
-                  ),
-                  label: Text('Monthly'),
-                  backgroundColor: Colors.amberAccent,
-                  autofocus: true,
-                  onPressed: () =>
-                      model.handleScheduleTypeChange(ScheduleType.MONTHLY),
-                ),
-              ],
+            DropdownButton<String>(
+              value: model.type,
+              icon: Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              style: TextStyle(color: Colors.deepPurple),
+              underline: Container(
+                height: 2,
+                color: Colors.deepPurpleAccent,
+              ),
+              onChanged: (String newValue) {
+                model.type = newValue;
+              },
+              items: model.types.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
             ),
           ]),
     );
@@ -136,28 +117,24 @@ class AddScheduleScreen extends StatelessWidget {
                 fontSize: 18.0,
               ),
             ),
-            Container(
-              height: 50,
-              child: ListView.builder(
-                  // shrinkWrap: true,
-                  itemCount: model.days.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext context, int index) {
-                    return FilterChip(
-                      selected: model.isDayChecked(model.days[index]),
-                      label: Text(model.days[index],
-                          style: TextStyle(color: Colors.white)),
-                      avatar: Text("" + model.days[index].substring(0, 1)),
-                      // elevation: 10,
-                      // pressElevation: 5,
-                      // shadowColor: Colors.teal,
-                      backgroundColor: Colors.black54,
-                      selectedColor: Colors.blue,
-                      onSelected: (bool selected) {
-                        model.toggleDayChecked(model.days[index]);
-                      },
-                    );
-                  }),
+            Wrap(
+              spacing: 10,
+              children: List.generate(
+                model.days.length,
+                (index) => FilterChip(
+                  selected: model.isDayChecked(model.days[index]),
+                  label: Text(model.days[index],
+                      style: TextStyle(color: Colors.white)),
+                  // elevation: 10,
+                  // pressElevation: 5,
+                  // shadowColor: Colors.teal,
+                  backgroundColor: Colors.black54,
+                  selectedColor: Colors.blue,
+                  onSelected: (bool selected) {
+                    model.toggleDayChecked(model.days[index]);
+                  },
+                ),
+              ),
             )
           ]),
     );
@@ -179,20 +156,26 @@ class AddScheduleScreen extends StatelessWidget {
                 fontSize: 18.0,
               ),
             ),
-            new Wrap(
-              runAlignment: WrapAlignment.center,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: <Widget>[
-                // ChoiceChip(
-                //   label: Text('Mobile Money'),
-                //   selected: true,
-                // onSelected: model.handleScheduleTypeChange(1),
-                // ),
-                ChoiceChip(
-                  label: Text('In Person'),
-                  selected: true,
-                ),
-              ],
+            DropdownButton<String>(
+              value: model.paymentOption,
+              icon: Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              style: TextStyle(color: Colors.deepPurple),
+              underline: Container(
+                height: 2,
+                color: Colors.deepPurpleAccent,
+              ),
+              onChanged: (String newValue) {
+                model.paymentOption = newValue;
+              },
+              items: model.paymentType
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
             ),
           ]),
     );
@@ -315,13 +298,6 @@ class AddScheduleScreen extends StatelessWidget {
                     fontSize: 18.0,
                   ),
                 ),
-                // ActionChip(
-                //   label: Text('Add Bag'),
-                //   onPressed: () {
-                //     // Show modal on screen
-                //     showBagListModal(context, model);
-                //   },
-                // ),
               ],
             ),
             new Padding(
@@ -330,29 +306,32 @@ class AddScheduleScreen extends StatelessWidget {
             new Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                ActionChip(
-                  label: Text('Small'),
-                  onPressed: () {},
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                ActionChip(
-                  label: Text('Medium'),
-                  onPressed: () {},
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                ActionChip(
-                  label: Text('Large'),
-                  onPressed: () {},
+                DropdownButton<String>(
+                  value: model.bagSize,
+                  icon: Icon(Icons.arrow_downward),
+                  iconSize: 24,
+                  elevation: 16,
+                  style: TextStyle(color: Colors.deepPurple),
+                  underline: Container(
+                    height: 2,
+                    color: Colors.deepPurpleAccent,
+                  ),
+                  onChanged: (String newValue) {
+                    model.bagSize = newValue;
+                  },
+                  items: model.bagList
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
               ],
             ),
             TextField(
               onChanged: (value) {
-                print(value);
+                model.bagNumber = value;
               },
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[
@@ -365,29 +344,41 @@ class AddScheduleScreen extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            Container(
-              height: 48,
-              decoration: BoxDecoration(
-                color: ProductDetailsAppTheme.nearlyBlue,
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(16.0),
+            InkWell(
+              onTap: () {
+                model.saveSchedule();
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ScheduleHomeScreen(),
+                    ),
+                    (route) => false);
+              },
+              child: Container(
+                height: 48,
+                decoration: BoxDecoration(
+                  color: ProductDetailsAppTheme.nearlyBlue,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(16.0),
+                  ),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                        color:
+                            ProductDetailsAppTheme.nearlyBlue.withOpacity(0.5),
+                        offset: const Offset(1.1, 1.1),
+                        blurRadius: 10.0),
+                  ],
                 ),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                      color: ProductDetailsAppTheme.nearlyBlue.withOpacity(0.5),
-                      offset: const Offset(1.1, 1.1),
-                      blurRadius: 10.0),
-                ],
-              ),
-              child: Center(
-                child: Text(
-                  'Add To Schedule',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18,
-                    letterSpacing: 0.0,
-                    color: ProductDetailsAppTheme.nearlyWhite,
+                child: Center(
+                  child: Text(
+                    'Add To Schedule',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                      letterSpacing: 0.0,
+                      color: ProductDetailsAppTheme.nearlyWhite,
+                    ),
                   ),
                 ),
               ),
@@ -447,13 +438,14 @@ class AddScheduleScreen extends StatelessWidget {
                     zoomGesturesEnabled: true,
                     zoomControlsEnabled: false,
                     onTap: (argument) {
+                      model.latLng = argument;
                       print(argument);
                       model.location = argument.toString();
                       Navigator.of(context).pop();
                     },
                     onMapCreated: (GoogleMapController controller) {
                       // controller.setMapStyle(Utils.mapStyles);
-                      // mapController = controller;
+                      mapController = controller;
 
                       // todo Investigate show all markers
                       // showAllMarkerInfo();
@@ -474,11 +466,8 @@ class AddScheduleScreen extends StatelessWidget {
                               child: Icon(Icons.my_location),
                             ),
                             onTap: () {
-                              // _getCurrentLocation();
+                              _getCurrentLocation();
                               // on button tap
-
-                              Navigator.of(context).pop();
-                              print("Remove Context");
                             },
                           ),
                         ),
@@ -491,7 +480,7 @@ class AddScheduleScreen extends StatelessWidget {
                             child: SizedBox(
                               width: 56,
                               height: 56,
-                              child: Icon(Icons.remove),
+                              child: Icon(Icons.cancel),
                             ),
                             onTap: () {
                               // _getCurrentLocation();
@@ -512,6 +501,31 @@ class AddScheduleScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+//   // Method for retrieving the current location
+  Position _currentPosition = null;
+  _getCurrentLocation() async {
+    await _geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) async {
+      // Store the position in the variable
+      _currentPosition = position;
+
+      print('CURRENT POS: $_currentPosition');
+
+      // For moving the camera to current location
+      mapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(position.latitude, position.longitude),
+            zoom: 18.0,
+          ),
+        ),
+      );
+    }).catchError((e) {
+      print(e);
+    });
   }
 }
 

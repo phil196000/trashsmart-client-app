@@ -47,6 +47,9 @@ dependencies:
   intl: ^0.16.0
   observable_ish: ^2.1.4
 
+  # Screen util
+  flutter_screenutil: ^0.4.2
+
   # Add Stack Architecture
   # state management
   stacked: ^1.7.1
@@ -61,6 +64,9 @@ dependencies:
 
   #geolocator
   geolocator: ^5.3.2+2
+
+  # Geolocation decoder
+  geocoder: ^0.2.1
 
   # Bottom Sheet modal
   modal_bottom_sheet: ^1.0.0+1 #later remove and use system default
@@ -88,6 +94,9 @@ flutter:
   assets:
     - lib/assets/logo.png
     - lib/assets/lottie/schedule.json
+    - lib/assets/image_01.png
+    - lib/assets/image_02.png
+    - lib/assets/image_03.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -117,6 +126,20 @@ flutter:
         - asset: lib/assets/fonts/Roboto-Regular.ttf
         - asset: lib/assets/fonts/Roboto-Medium.ttf
           weight: 400
-  #
+    - family: CustomIcons
+      fonts:
+        - asset: lib/assets/CustomIcons.ttf
+
+    - family: Montserrat-Bold
+      fonts:
+        - asset: lib/assets/Montserrat-Bold.ttf
+
+    - family: Montserrat-Black
+      fonts:
+        - asset: lib/assets/Montserrat-Black.ttf
+
+    - family: Montserrat-Medium
+      fonts:
+        - asset: lib/assets/Montserrat-Medium.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

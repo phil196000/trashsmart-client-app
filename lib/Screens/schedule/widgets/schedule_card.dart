@@ -3,10 +3,9 @@ import 'package:trashsmart/Constants/app_theme.dart';
 import 'package:trashsmart/Screens/schedule/data/schedule.dart';
 
 class ScheduleCard extends StatelessWidget {
-  final String label;
   final Schedule schedule;
   final void Function() onPressed;
-  const ScheduleCard({Key key, this.label, this.schedule, this.onPressed})
+  const ScheduleCard({Key key, this.schedule, this.onPressed})
       : super(key: key);
 
   @override
@@ -28,13 +27,15 @@ class ScheduleCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '20-11-2020 at 8:00 am ',
+                    schedule.days.toString(),
+                    softWrap: true,
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 16,
                         color: Colors.grey.withOpacity(0.8)),
                   ),
-                  Text(schedule.money.toString(), style: AppTheme.body2),
+                  Text("GHS" + schedule.price.toString(),
+                      style: AppTheme.body2),
                 ],
               ),
               SizedBox(
@@ -43,7 +44,7 @@ class ScheduleCard extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    schedule.name,
+                    schedule.location.name,
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 16,
@@ -57,7 +58,12 @@ class ScheduleCard extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    'One-time pickup',
+                    schedule.count.toString() +
+                        " " +
+                        schedule.bagSize.toString() +
+                        " Bags : " +
+                        "" +
+                        schedule.type,
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 16,

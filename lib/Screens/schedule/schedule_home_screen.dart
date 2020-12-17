@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 import 'package:trashsmart/Constants/colors.dart';
 import 'package:trashsmart/Screens/schedule/add_schedule_screen.dart';
+import 'package:trashsmart/Screens/schedule/new_schedule_screen.dart';
 import 'package:trashsmart/Screens/schedule/schedule_viewmodel.dart';
 import 'package:trashsmart/Screens/schedule/theme/schedule_app_theme.dart';
 import 'package:trashsmart/Screens/schedule/widgets/calendar_popup_view.dart';
@@ -101,22 +102,27 @@ class ScheduleScreen extends State<ScheduleHomeScreen>
                           ),
                         ];
                       },
-                      body: ListView.builder(
-                          itemCount: 4,
-                          itemBuilder: (context, index) {
-                            return ScheduleCard(
-                              label: "LAbel",
-                              schedule: model.popularSchedules[index],
-                              onPressed: () {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //       builder: (context) =>
-                                //           ProductDetailScreen(),
-                                //     ));
-                              },
-                            );
-                          }),
+                      body: model.isBusy
+                          ? Container(
+                              width: 10,
+                              height: 10,
+                              child: CircularProgressIndicator(),
+                            )
+                          : ListView.builder(
+                              itemCount: model.popularSchedules.length,
+                              itemBuilder: (context, index) {
+                                return ScheduleCard(
+                                  schedule: model.popularSchedules[index],
+                                  onPressed: () {
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //       builder: (context) =>
+                                    //           ProductDetailScreen(),
+                                    //     ));
+                                  },
+                                );
+                              }),
                     ),
                   ),
                 ],

@@ -10,13 +10,13 @@ class MarketViewModel extends ReactiveViewModel {
   List<Product> products = [];
 
   MarketViewModel() {
+    setBusy(true);
     getProducts();
+    setBusy(false);
   }
 
   void getProducts() {
-    setBusy(true);
     products = _informationService.products;
-    setBusy(false);
   }
 
   List<Product> get popularProducts => products;

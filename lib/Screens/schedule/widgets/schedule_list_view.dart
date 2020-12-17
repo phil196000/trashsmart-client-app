@@ -127,7 +127,7 @@ class ScheduleView extends StatelessWidget {
                                             padding:
                                                 const EdgeInsets.only(top: 16),
                                             child: Text(
-                                              schedule.name,
+                                              schedule.location.name,
                                               textAlign: TextAlign.left,
                                               style: TextStyle(
                                                 fontWeight: FontWeight.w600,
@@ -151,7 +151,7 @@ class ScheduleView extends StatelessWidget {
                                                   CrossAxisAlignment.center,
                                               children: <Widget>[
                                                 Text(
-                                                  '${schedule.time} lesson',
+                                                  '${schedule.price} lesson',
                                                   textAlign: TextAlign.left,
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.w200,
@@ -198,7 +198,7 @@ class ScheduleView extends StatelessWidget {
                                                   CrossAxisAlignment.start,
                                               children: <Widget>[
                                                 Text(
-                                                  '\$${schedule.money}',
+                                                  '\$${schedule.price}',
                                                   textAlign: TextAlign.left,
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.w600,

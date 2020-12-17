@@ -12,7 +12,6 @@ import 'package:trashsmart/Components/DarkGreen.dart';
 import 'package:trashsmart/Constants/colors.dart';
 import 'package:trashsmart/DartAssets/LoginImage.dart';
 import 'package:trashsmart/Screens/ForgotPassword.dart';
-import 'package:trashsmart/Screens/SignIn.dart';
 import 'package:trashsmart/Screens/SignUp.dart';
 import 'package:trashsmart/Screens/dashboard/dashboard.dart';
 

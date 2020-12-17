@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:trashsmart/Screens/Gift/Gift.dart';
 import 'package:trashsmart/Screens/Profile/Profile.dart';
-import 'package:trashsmart/Screens/home/home.dart';
+import 'package:trashsmart/Screens/dashboard/home/Home.dart';
+import 'package:trashsmart/Screens/dashboard/home/user_dashboard.dart';
 
 import 'dashboard_viewmodel.dart';
 
@@ -21,7 +22,9 @@ class _MyStatefulWidgetState extends State<DashBoard> {
   _MyStatefulWidgetState(this.id);
   Widget _widgetOptions(item) {
     List dashboard = [
-      Home(),
+      UserDashboard(
+        id: this.id,
+      ),
       Gift(),
       Profile(
         id: this.id,

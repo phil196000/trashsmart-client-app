@@ -8,10 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:trashsmart/Components/Stepper.dart';
 import 'package:trashsmart/Constants/colors.dart';
-
 import 'package:trashsmart/DartAssets/SignUpImage.dart';
 import 'package:trashsmart/Screens/dashboard/dashboard.dart';
 
@@ -68,7 +65,8 @@ class _SignUpState extends State<SignUp> {
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DashBoard(),
+                  builder: (context) =>
+                      DashBoard(), //todo Pass User Id too here
                 ),
                 (route) => false);
           });
