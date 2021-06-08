@@ -40,10 +40,11 @@ class _MyAppDashboard extends State<UserDashboard> {
         height: height / 2,
         decoration: BoxDecoration(
             gradient: LinearGradient(
-                colors: [Color(0xFFfbfcfd), Color(0xFFf2f3f8)],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: [0.5, 1.0])),
+          colors: [Color(0xFFfbfcfd), Color(0xFFf2f3f8)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          // stops: [0.5, 1.0]
+        )),
       ),
     );
   }

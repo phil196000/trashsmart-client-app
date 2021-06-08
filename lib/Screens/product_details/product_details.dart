@@ -21,7 +21,8 @@ class _ProductDetailScreen extends State<ProductDetailScreen>
   @override
   void initState() {
     animationController = AnimationController(
-        duration: const Duration(milliseconds: 1000), vsync: this);
+      duration: const Duration(milliseconds: 1000),
+    );
     animation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
         parent: animationController,
         curve: Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
